@@ -9,11 +9,16 @@ import Link from "next/link";
 function Herosection() {
   return (
     <>
-    <div className="flex flex-col justify-center items-center bg-black h-auto w-[90vw]  sm:w-[100vw]  md:h-[100vh] md:w-[90vw]  lg:h-[100vh] lg:w-[95vw] overflow-hidden mx-auto py-10 md:py-0 rounded-md bg-gray-200 p-4 sm:mb-3 md:m-2 lg:rounded[20%]"> 
+    <div className="flex flex-col justify-center items-center bg-black h-auto w-[90vw]  sm:w-[100vw]   md:w-[90vw]   lg:w-[95vw] overflow-hidden mx-auto py-10 md:py-0 rounded-md bg-gray-200 p-4 sm:mb-3 md:m-2 lg:rounded[20%]"> 
     <img className=" rounded-md w-[90%] h-[80%] mt-8 mb-4" src="/uploads/forntpic.png" alt="" />
     
+    <div className="grid sm:grid-cols-2  py-10 max-w-[90%] ">
+     <h2 className="hidden sm:flex flex-grow">Get started</h2>
+      <h1 className="font-bold text-xl sm:text-3xl">Visit us to see our latest exhibitions and events</h1>
+    </div>
      <div className="flex flex-col sm:flex-row gap-5 mb-4">
      <div>
+  
       <Link href={"/ourarts"}>
       <Button
         borderRadius="1.75rem"

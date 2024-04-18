@@ -49,7 +49,12 @@ export const HoverEffect = ({
   </figure>
             <CardTitle>Price: {"\u20B9"} {item.title}</CardTitle>
             <CardDescription>About:{item.description}</CardDescription>
-          
+            <button className=" bg-white rounded-full pl-4 pr-1 py-1 text-black flex items-center space-x-1 bg-black mt-4 text-xs font-bold dark:bg-zinc-800">
+          <span>Buy now</span>
+          <span className="bg-zinc-700 rounded-full text-[0.6rem] px-2 py-0 text-black">
+          {"\u20B9"} {item.title}
+          </span>
+        </button>
           </Card></>
         
       ))}
