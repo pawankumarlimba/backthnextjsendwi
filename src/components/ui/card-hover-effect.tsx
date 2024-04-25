@@ -11,7 +11,7 @@ export const HoverEffect = ({
     title: string;
     description: string;
     link: string; 
-    
+    id:string;
   }[];
   className?: string;
 }) => {
@@ -26,6 +26,7 @@ export const HoverEffect = ({
     >
       {items.map((item, idx) => (
         <>
+        <Link href={{ pathname: '/orderpage', query: { id: item.id } }}>
           <AnimatePresence>
             {hoveredIndex === idx && (
               <motion.span
@@ -55,7 +56,8 @@ export const HoverEffect = ({
           {"\u20B9"} {item.title}
           </span>
         </button>
-          </Card></>
+          </Card>
+          </Link></>
         
       ))}
     </div>

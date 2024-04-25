@@ -4,6 +4,9 @@ import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 export default function RootLayout({
   children,
@@ -12,7 +15,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="bg-black/[0.9] ">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+      
+    {children}
+      <ToastContainer/> </body>
     </html>
   );
 }

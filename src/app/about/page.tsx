@@ -1,14 +1,40 @@
-
+'use client'
+import Navbar3 from "@/components/Navbar3";
 import {
     IconBrandInstagram,
     IconBrandLinkedin,
    
   } from "@tabler/icons-react";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
-function page() {
+interface aboutProps {
+  handleChangeState: (newValue: boolean) => void;
+}
+const page: React.FC<aboutProps> = ({ handleChangeState }) => {
+  // Retrieve isLoggedIn value from local storage
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(() => {
+    const storedValue = localStorage.getItem("isLoggedIn");
+    return storedValue ? JSON.parse(storedValue) : true;
+  });
+   handleChangeState = (newValue: boolean) => {
+    setIsLoggedIn(newValue);
+  };
+  useEffect(() => {
+    const storedIsLoggedIn = localStorage.getItem('isLoggedIn');
+    if (storedIsLoggedIn === 'true') {
+      handleChangeState(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("isLoggedIn", JSON.stringify(isLoggedIn));
+  }, [isLoggedIn]);
   return (
     <>
+    <div className="bg-white ">
+    <Navbar3  isLoggedIn={isLoggedIn} handleChangeState={handleChangeState} />
+    </div>
     <div className="bg-white min-h-screen min-w-screen relative ">
      <div className=" pt-5">
         <h1 className="text-2xl md:text-7xl text-center font-sans font-bold"> Meet Our Team</h1>
