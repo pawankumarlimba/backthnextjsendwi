@@ -45,7 +45,7 @@ function Navbar2() {
             <DropdownMenuLabel>My Account</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem>
+              <DropdownMenuItem> 
                 <User className="mr-2 h-4 w-4" />
                <Link href={"/singup"}>
                 <span>Signup</span></Link>
