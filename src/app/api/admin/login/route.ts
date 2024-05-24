@@ -1,5 +1,5 @@
 import { connect } from '@/dbConfig/dbConfig';
-import User from '@/models/userModel';
+import Admin from '@/models/adminModel';
 import { NextRequest, NextResponse } from 'next/server';
 import bcryptjs from 'bcryptjs';
 import jwt from 'jsonwebtoken';
@@ -11,26 +11,26 @@ export async function POST(request: NextRequest) {
     const reqBody = await request.json();
     const { email, password } = reqBody;
 
-    const user = await User.findOne({ email });
-    if (!user) {
+    const admin = await Admin.findOne({ email });
+    if (!admin) {
       return NextResponse.json(
-        { error: 'User does not exist' },
+        { error: 'admin does not exist' },
         { status: 400 }
       );
     }
 
     //check if password is correct
-    const validPassword = await bcryptjs.compare(password, user.password);
+    const validPassword = await bcryptjs.compare(password, admin.password);
     if (!validPassword) {
       return NextResponse.json({ error: 'Invalid password' }, { status: 400 });
     }
-    console.log(user);
+    // console.log(admin);
 
     //create token data
     const tokenData = {
-      id: user._id,
-      username: user.username,
-      email: user.email,
+      id: admin._id,
+      username: admin.username,
+      email: admin.email,
     };
 
     //create token
@@ -46,7 +46,7 @@ export async function POST(request: NextRequest) {
     response.cookies.set('token', token, {
       httpOnly: true,
     });
-    console.log(response);
+    // console.log(response);
 
     return response;
   } catch (error: any) {
