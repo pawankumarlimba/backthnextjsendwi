@@ -44,7 +44,7 @@ const page: React.FC = () => {
         
 console.log(isLoggedIn);
 toast.success("user login succesfully");
-//window.location.replace('/');
+window.location.replace('/');
 
         }
         else{

@@ -27,13 +27,10 @@ function Footer() {
               </div>
               <div>
               <h2 className="text-amber-300 text-lg font-semibold mb-4"> Quick Links</h2>
-              <a href="https://leetcode.com/pawankumarlimba/">
-              <p className="text-amber-300">LeetCode</p> 
-              </a>
-             <a href="https://github.com/pawankumarlimba"><p className="text-amber-300">Github</p></a>
+              
+             <a href="/admindashbord"><p className="text-amber-300">Admin</p></a>
              <a href="https://codeforces.com/profile/pawan_kumar_limba"><p className="text-amber-300">Codeforce</p></a>
-             <a href="https://auth.geeksforgeeks.org/user/pawankumarr274"><p className="text-amber-300">GeeksforGeeks</p></a>
-  
+             
              
               </div>
              

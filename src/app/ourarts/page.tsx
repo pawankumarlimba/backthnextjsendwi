@@ -1,9 +1,17 @@
 "use client"
 import Navbar3 from "@/components/Navbar3";
 import { HoverEffect } from "@/components/ui/card-hover-effect";
+import axios from "axios";
 import { useEffect, useState } from "react";
 interface ourartsProps {
   handleChangeState: (newValue: boolean) => void;
+}
+interface Webinar {
+  _id: string;
+  name:string,
+  price: string;
+  description: string;
+  url: string;
 }
 const page: React.FC<ourartsProps> = ({ handleChangeState }) => {
   // Retrieve isLoggedIn value from local storage
@@ -24,6 +32,39 @@ const page: React.FC<ourartsProps> = ({ handleChangeState }) => {
   useEffect(() => {
     localStorage.setItem("isLoggedIn", JSON.stringify(isLoggedIn));
   }, [isLoggedIn]);
+
+
+
+
+
+
+  const [Allarts, setAllarts] = useState<  Webinar[]>([]);
+
+  useEffect(() => {
+      const fetchData = async () => {
+          try {
+              const response = await axios.post<{ designs: Webinar[] }>('/api/design/all');
+              setAllarts(response.data.designs);
+          } catch (error) {
+              console.error('Error fetching data:', error);
+          }
+      };
+
+      fetchData();
+  }, []);
+
+
+
+
+
+
+
+
+
+
+
+
+
   return (
     <>
     <div className="bg-white ">
@@ -35,18 +76,19 @@ const page: React.FC<ourartsProps> = ({ handleChangeState }) => {
         
         <p className="mt-2 text-2xl sm:text-3xl text-blue-900 lg:sm:text-3xl leading-8 font-extrabold tracking-tight  sm:text-4xl">Our Arts</p>
        </div>
-       <div className="mt-10"><HoverEffect items={hovercard.map(webinar=>({
-        title:webinar.title,
+       <div className="mt-10"><HoverEffect items={Allarts.map(webinar=>({
+        name:webinar.name,
+        price:webinar.price,
         description:webinar.description,
-        link:webinar.link,
-        id:webinar.id,
+        url:webinar.url,
+        _id:webinar._id,
        }))} /></div>
        </div></div>
 
     </>
   )
 }
-const hovercard = [
+/*const hovercard = [
     { id:"1",
       title: "49",
       description:
@@ -88,5 +130,5 @@ const hovercard = [
         "A multinational technology company that develops, manufactures, licenses, supports, and sells computer software, consumer electronics, personal computers, and related services.",
       link: "/uploads/member-2.jpg",
     },
-  ];
+  ];*/
 export default page

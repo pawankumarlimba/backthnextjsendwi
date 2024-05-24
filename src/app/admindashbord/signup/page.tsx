@@ -1,15 +1,44 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/utils/cn";
 import Link from "next/link";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 
 
 function page() {
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const [email,setemail]=useState('');
+  const [password,setpassword]=useState('');
+ 
+  const [username,setusername]=useState('');
+
+  const handleSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    try {
+      const response=await axios.post('/api/admin/register',{
+        username,
+        email,
+        password})
+        console.log(response);
+        if(response.data.success){
+          
+          
+toast.success("user signin succesfully");
+window.location.replace('/admindashbord/adminhome');
+
+        }
+        else{
+          toast.error("account not found")
+        }
+    } catch (error) {
+      toast.error("somthing is wrong")
+      console.log(error)
+    }
+    
+
     console.log("Form submitted");
   };
   return (
@@ -35,7 +64,12 @@ function page() {
         <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 mb-4">
           <LabelInputContainer>
             <Label htmlFor="firstname">First name</Label>
-            <Input id="firstname" placeholder="Tyler" type="text" />
+            <Input id="firstname" placeholder="Tyler" type="text"
+            value={username}
+            onChange={(e)=>{setusername(e.target.value)}}
+            
+            
+            />
           </LabelInputContainer>
           <LabelInputContainer>
             <Label htmlFor="lastname">Last name</Label>
@@ -44,11 +78,16 @@ function page() {
         </div>
         <LabelInputContainer className="mb-4">
           <Label htmlFor="email">Email Address</Label>
-          <Input id="email" placeholder="projectmayhem@fc.com" type="email" />
+          <Input id="email" placeholder="projectmayhem@fc.com" type="email"
+           value={email}
+           onChange={(e)=>{setemail(e.target.value)}} />
         </LabelInputContainer>
         <LabelInputContainer className="mb-4">
           <Label htmlFor="password">Password</Label>
-          <Input id="password" placeholder="••••••••" type="password" />
+          <Input id="password" placeholder="••••••••" type="password" 
+           value={password}
+           onChange={(e)=>{setpassword(e.target.value)}}
+          />
         </LabelInputContainer>
         
         <button

@@ -2,6 +2,7 @@
 
 
 import Footer from "./Footer";
+import Herosection2 from "./Herosection2";
 
 import Herosection from "./herosection";
 import Navbar2 from "./ui/Navbar2";
@@ -18,12 +19,13 @@ function Homepage() {
     <div className="block sm:hidden left-0">
       <Navbar2/>
     </div>  </div></div>
-    <div className="flex flex-col items-center ">
+    
     
     <Herosection/>
+    <Herosection2/>
     <Footer/>
     
-    </div></div>
+    </div>
     </>
   )
 }

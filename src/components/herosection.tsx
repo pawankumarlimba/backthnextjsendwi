@@ -4,6 +4,21 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Navbar3 from "./Navbar3";
 
+import { Button } from "@/components/ui/button"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+
+
+
 interface HerosectionProps {
   handleChangeState: (newValue: boolean) => void;
 }
@@ -42,11 +57,39 @@ const Herosection: React.FC<HerosectionProps> = ({ handleChangeState }) => {
               <span>OUR ARTS</span>
             </button>
           </Link>
-          <Link href={"/uploadarts"}>
+
+
+          <Dialog>
+      <DialogTrigger asChild>
+
           <button className="rounded-full pl-3 pr-3 py-2 sm:pl-8 sm:pr-8 lg:pl-12 lg:pr-12 text-black flex items-center sm:ml-[15vw] sm:mt-[4vh] text-xs font-bold " style={{ backgroundColor: '#eeb25c' }}>
               <span>UPLOAD ARTS</span>
             </button>
-            </Link>
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-[425px]">
+        <DialogHeader>
+          <DialogTitle>Upload Arts</DialogTitle>
+          <DialogDescription>
+             your Art here. Click save when you're done.
+          </DialogDescription>
+        </DialogHeader>
+        <div className="grid gap-4 py-4">
+          
+          <div className="grid w-full max-w-sm items-center gap-1.5">
+      <Label htmlFor="picture">Picture</Label>
+      <Input id="picture" type="file" />
+    </div>
+          </div>
+          
+       
+        <DialogFooter>
+          <Button type="submit">Upload Arts</Button>
+        </DialogFooter>
+      </DialogContent>
+            </Dialog>
+
+
+
         </div>
         <div className="absolute bottom-0 right-0">
           <img className="h-[10vh] sm:h-[30vh] lg:h-[40vh]" src="/uploads/logo1.png" alt="" />
