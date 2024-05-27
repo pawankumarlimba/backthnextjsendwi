@@ -9,7 +9,7 @@ const designSchema = new mongoose.Schema({
   url: {
     type: String,
     required: [true, 'please provide name'],
-    unique: true,
+    
   },
   category: {
     type: String,

@@ -6,12 +6,15 @@ import axios from "axios";
 import { useState } from "react";
 import { toast } from "react-toastify";
 
+
 function Page() {
   const [name, setName] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const [price, setPrice] = useState<number >(1);
-  const [url, setUrl] = useState<string>("dgdgdggdggfqqqggsss");
-  const [category, setCategory] = useState<string>("123");
+  const [url, setUrl] = useState<File | null>(null);
+  const [category, setCategory] = useState<string>("12356nn");
+
+  
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
