@@ -1,15 +1,38 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/utils/cn";
 import Link from "next/link";
+import { toast } from "react-toastify";
+import axios from "axios";
 
 
 function page() {
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const [email,setemail]=useState('');
+  const [password,setpassword]=useState('');
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("Form submitted");
+    try {
+      
+      const response=await axios.post('/api/admin/login',{
+        email,
+        password})
+        console.log(response);
+        if(response.data.success){
+toast.success("user admin succesfully");
+window.location.replace('/admindashbord/adminhome');
+
+        }
+        else{
+          toast.error("account not found")
+        }
+    } catch (error) {
+      toast.error("somthing is wrong")
+    }
+    
+    
   };
   return (
     <div className="flex justify-center items-center bg-black h-[100vh] w-[100vw] sm:h-[100vh] sm:w-[100vw]  md:h-[100vh] md:w-[100vw]  lg:h-[100vh] lg:w-[100vw] overflow-hidden mx-auto  ">
@@ -23,7 +46,7 @@ function page() {
       <button className="absolute top-0 right-0 text-xl rounded-[50%] pr-2 pl-2 pb-1  ">x</button></Link>
       </div>
       <p className="text-neutral-600 text-sm max-w-sm mt-2 dark:text-neutral-300">
-        Login to aceternity if you can because we don&apos;t have a login flow
+        Login to Admindashbord if you can because we don&apos;t have a login flow
         yet
       </p>
  
@@ -31,11 +54,18 @@ function page() {
        
         <LabelInputContainer className="mb-4">
           <Label htmlFor="email">Email Address</Label>
-          <Input id="email" placeholder="projectmayhem@fc.com" type="email" />
+          <Input id="email" placeholder="projectmayhem@fc.com" type="email" 
+          value={email}
+          onChange={(e)=>{setemail(e.target.value)}}
+          
+          />
         </LabelInputContainer>
         <LabelInputContainer className="mb-4">
           <Label htmlFor="password">Password</Label>
-          <Input id="password" placeholder="••••••••" type="password" />
+          <Input id="password" placeholder="••••••••" type="password"
+          value={password}
+          onChange={(e)=>{setpassword(e.target.value)}}
+          />
         </LabelInputContainer>
         
         <button

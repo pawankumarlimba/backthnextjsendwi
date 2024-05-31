@@ -8,9 +8,11 @@ export const HoverEffect = ({
   className,
 }: {
   items: {
-    title: string;
+    _id:string,
+    name:string,
+    price: string;
     description: string;
-    link: string; 
+    url: string; 
     
   }[];
   className?: string;
@@ -26,6 +28,7 @@ export const HoverEffect = ({
     >
       {items.map((item, idx) => (
         <>
+        <Link href={{ pathname: '/orderpage', query: { _id: item._id } }}>
           <AnimatePresence>
             {hoveredIndex === idx && (
               <motion.span
@@ -45,17 +48,13 @@ export const HoverEffect = ({
           </AnimatePresence>
           <Card>
           <figure className="px-5 pt-5 ">
-    <img src={item.link} alt="Shoes" className="rounded-xl" />
+    <img src={item.url} alt="Shoes" className="rounded-xl" />
   </figure>
-            <CardTitle>Price: {"\u20B9"} {item.title}</CardTitle>
+            <CardTitle>Price: {"\u20B9"} {item.price}</CardTitle>
             <CardDescription>About:{item.description}</CardDescription>
-            <button className=" bg-white rounded-full pl-4 pr-1 py-1 text-black flex items-center space-x-1 bg-black mt-4 text-xs font-bold dark:bg-zinc-800">
-          <span>Buy now</span>
-          <span className="bg-zinc-700 rounded-full text-[0.6rem] px-2 py-0 text-black">
-          {"\u20B9"} {item.title}
-          </span>
-        </button>
-          </Card></>
+            
+          </Card>
+          </Link></>
         
       ))}
     </div>

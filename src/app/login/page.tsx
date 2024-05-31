@@ -1,17 +1,63 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/utils/cn";
 import Link from "next/link";
+import axios from "axios";
+import { toast } from "react-toastify";
+import Navbar3 from "@/components/Navbar3";
 
 
-function page() {
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+
+
+const page: React.FC = () => {
+  
+  const [email,setemail]=useState('');
+  const [password,setpassword]=useState('');
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(localStorage.getItem("isLoggedIn") === "true");
+
+ 
+  const handleChangeState = (newValue: boolean) => {
+    setIsLoggedIn(newValue);
+  };
+  useEffect(() => {
+    const storedIsLoggedIn = localStorage.getItem('isLoggedIn');
+    if (storedIsLoggedIn === 'true') {
+      handleChangeState(true);
+    }
+  }, []);
+   const handleSubmit =async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("Form submitted");
+    
+    try {
+      
+      const response=await axios.post('/api/user/login',{
+        email,
+        password})
+        console.log(response);
+        if(response.data.success){
+       
+         
+          localStorage.setItem("isLoggedIn", "true");
+          setIsLoggedIn(true);
+        
+console.log(isLoggedIn);
+toast.success("user login succesfully");
+window.location.replace('/');
+
+        }
+        else{
+          toast.error("account not found")
+        }
+    } catch (error) {
+      toast.error("somthing is wrong")
+    }
+    console.log(isLoggedIn);
   };
   return (
+    <>
+    <Navbar3  isLoggedIn={isLoggedIn} handleChangeState={handleChangeState}  />
     <div className="flex justify-center items-center bg-white h-[100vh] w-[100vw] sm:h-[100vh] sm:w-[100vw]  md:h-[100vh] md:w-[100vw]  lg:h-[100vh] lg:w-[100vw] overflow-hidden mx-auto  ">
  <div className="max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-white dark:bg-black">
  <div className="flex flex-row relative ">
@@ -31,11 +77,17 @@ function page() {
        
         <LabelInputContainer className="mb-4">
           <Label htmlFor="email">Email Address</Label>
-          <Input id="email" placeholder="projectmayhem@fc.com" type="email" />
+          <Input id="email" placeholder="projectmayhem@fc.com" type="email"
+          value={email}
+          onChange={(e)=>{setemail(e.target.value)}} />
         </LabelInputContainer>
         <LabelInputContainer className="mb-4">
           <Label htmlFor="password">Password</Label>
-          <Input id="password" placeholder="••••••••" type="password" />
+          <Input id="password" placeholder="••••••••" type="password" 
+          value={password}
+          onChange={(e)=>{setpassword(e.target.value)}}
+          
+          />
         </LabelInputContainer>
         
         <button
@@ -64,7 +116,7 @@ function page() {
         </div>
       </form>
     </div>
-    </div>
+    </div></>
   );
 }
  
