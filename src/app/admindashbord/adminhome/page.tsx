@@ -208,7 +208,7 @@ function Page() {
 
 export default Page;
 
-export const products = [
+/*export const products = [
   {
     title: 'All Users',
     link: '/admindashbord/users',
@@ -246,4 +246,4 @@ export const products = [
     link: 'https://goldenbellsacademy.com',
     thumbnail: '/uploads/6.png',
   },
-];
+];*/
