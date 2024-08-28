@@ -7,7 +7,7 @@ import Link from 'next/link';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 
-function page() {
+function Page() {
   const [email, setemail] = useState('');
   const [password, setpassword] = useState('');
 
@@ -112,4 +112,4 @@ const LabelInputContainer = ({
   );
 };
 
-export default page;
+export default Page;

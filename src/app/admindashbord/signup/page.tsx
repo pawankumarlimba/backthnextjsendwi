@@ -9,7 +9,7 @@ import { toast } from "react-toastify";
 
 
 
-function page() {
+function Page() {
   const [email,setemail]=useState('');
   const [password,setpassword]=useState('');
  
@@ -130,4 +130,4 @@ const LabelInputContainer = ({
   );
 };
 
-export default page
+export default Page

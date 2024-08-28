@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/utils/cn";
@@ -7,37 +7,19 @@ import Link from "next/link";
 import axios from "axios";
 import { toast } from "react-toastify";
 import Navbar3 from "@/components/Navbar3";
+import { saveTokenToLocalStorage } from "@/helpers/Localstorege";
 
-interface singupProps {
-  isLoggedIn: boolean;
-  handleChangeState: (newValue: boolean) => void;
-  
-}
 
-const page: React.FC<singupProps> = ({ handleChangeState }) => {
+
+const Page = () => {
   const [email,setemail]=useState('');
   const [password,setpassword]=useState('');
  
   const [username,setusername]=useState('');
 
   
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(() => {
-    const storedValue = localStorage.getItem("isLoggedIn");
-    return storedValue ? JSON.parse(storedValue) : true;
-  });
-   handleChangeState = (newValue: boolean) => {
-    setIsLoggedIn(newValue);
-  };
-  useEffect(() => {
-    const storedIsLoggedIn = localStorage.getItem('isLoggedIn');
-    if (storedIsLoggedIn === 'true') {
-      handleChangeState(true);
-    }
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem("isLoggedIn", JSON.stringify(isLoggedIn));
-  }, [isLoggedIn]);
+  
+    
   
   
    const handleSubmit =async (e: React.FormEvent<HTMLFormElement>) => {
@@ -47,29 +29,29 @@ const page: React.FC<singupProps> = ({ handleChangeState }) => {
       const response=await axios.post('/api/user/register',{
         username,
         email,
-        password})
+        password}) 
+        const token="akartirachna";
+        saveTokenToLocalStorage(token);
         console.log(response);
         if(response.data.success){
-          localStorage.setItem("isLoggedIn", "true");
-          handleChangeState(true);
-
-toast.success("user signin succesfully");
-window.location.replace('/');
-
+       
+          toast.success("user singup succesfully");
+          window.location.replace('/');
+          
         }
+        
+
         else{
           toast.error("account not found")
         }
     } catch (error) {
       toast.error("somthing is wrong")
-      console.log(error)
     }
-    
 
   };
   return (
     <>
-    <Navbar3 isLoggedIn={isLoggedIn} handleChangeState={handleChangeState}/>
+    <Navbar3/>
     <div className="flex justify-center items-center bg-white h-[100vh] w-[100vw] sm:h-[100vh] sm:w-[100vw]  md:h-[100vh] md:w-[100vw]  lg:h-[100vh] lg:w-[100vw] overflow-hidden mx-auto  ">
  <div className="max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-white dark:bg-black">
  <div className="flex flex-row relative ">
@@ -167,4 +149,4 @@ const LabelInputContainer = ({
   );
 };
 
-export default page
+export default Page

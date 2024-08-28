@@ -34,10 +34,8 @@ interface Webinar {
     url: string;
   }
 
-interface ourartsProps {
-  handleChangeState: (newValue: boolean) => void;
-}
-const page: React.FC<ourartsProps> = ({ handleChangeState }) => {
+
+const Page = () => {
     const [_lang, setLang] = useState<string | null>(null);
     const [filteredCard, setFilteredCard] = useState<Webinar[]>([]);
     const [Allarts, setAllarts] = useState<  Webinar[]>([]);
@@ -64,27 +62,13 @@ const page: React.FC<ourartsProps> = ({ handleChangeState }) => {
         console.log("qwe",Allarts)
 
     }, []);
-    const [isLoggedIn, setIsLoggedIn] = useState<boolean>(() => {
-      const storedValue = localStorage.getItem("isLoggedIn");
-      return storedValue ? JSON.parse(storedValue) : true;
-    });
-     handleChangeState = (newValue: boolean) => {
-      setIsLoggedIn(newValue);
-    };
-    useEffect(() => {
-      const storedIsLoggedIn = localStorage.getItem('isLoggedIn');
-      if (storedIsLoggedIn === 'true') {
-        handleChangeState(true);
-      }
-    }, []);
+    
   
-    useEffect(() => {
-      localStorage.setItem("isLoggedIn", JSON.stringify(isLoggedIn));
-    }, [isLoggedIn]);
+    
     return (
         <>
             <div className="bg-white ">
-                <Navbar3  isLoggedIn={isLoggedIn} handleChangeState={handleChangeState} />
+                <Navbar3   />
             </div>
             {filteredCard.map((webinar, index) => (
                 <div key={index} className="min-h-screen  grid grid-cols-1 sm:grid-cols-5 lg:grid-cols-3   ">
@@ -255,4 +239,4 @@ const page: React.FC<ourartsProps> = ({ handleChangeState }) => {
     );
 }
 
-export default page;
+export default Page;

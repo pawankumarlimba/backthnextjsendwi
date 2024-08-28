@@ -1,20 +1,16 @@
 // Navbar3.tsx
 'use client'
-import React, { useEffect, useState } from "react";
+import React, {  useEffect, useState } from "react";
 import Link from "next/link";
 import { Menu, MenuItem } from "./ui/navbar-menu"; // Make sure to import HoveredLink and ProductItem if used
 import { cn } from "@/utils/cn";
 
 import axios from "axios";
 import { toast } from "react-toastify";
+import { getTokenFromLocalStorage, removeTokenFromLocalStorage } from "@/helpers/Localstorege";
 
-interface NavbarProps {
-  isLoggedIn: boolean;
-  handleChangeState: (newValue: boolean) => void;
-  
-}
 
-const Navbar3: React.FC<NavbarProps> = ({ isLoggedIn, handleChangeState }) => {
+const Navbar3 = () => {
   const [active, setActive] = useState<string | null>(null);
   
   
@@ -22,14 +18,22 @@ const Navbar3: React.FC<NavbarProps> = ({ isLoggedIn, handleChangeState }) => {
 
   
    
+  const [token,settoken]=useState<string | null>(null);
+  useEffect(() => {
+    const storedToken = getTokenFromLocalStorage();
+    settoken(storedToken);
+  }, []);
+ 
   const handleLogout =async () => {
     try {
       const response=await axios.get('/api/user/logout');
        
       if(response.data.success===true)
       {
-        localStorage.setItem("isLoggedIn", "false");
-        handleChangeState(false);
+       removeTokenFromLocalStorage();
+        settoken(null);
+    
+       
         toast.success("user logout succesfully");
         console.log(response);
       
@@ -42,10 +46,10 @@ const Navbar3: React.FC<NavbarProps> = ({ isLoggedIn, handleChangeState }) => {
       toast.error("internal error ")
       console.log(error)
     }
-   
     // Redirect to the home page after logout
     
   };
+
 
   return (
     <div className={cn("some-class", "")}>
@@ -59,7 +63,7 @@ const Navbar3: React.FC<NavbarProps> = ({ isLoggedIn, handleChangeState }) => {
               <MenuItem setActive={setActive} active={active} item="Home" />
             </Link>
           </div>
-          {!isLoggedIn && (
+          {!token && (
               <>
                 <Link href={'/singup'}>
                   <MenuItem setActive={setActive} active={active} item="Signup" />
@@ -69,7 +73,7 @@ const Navbar3: React.FC<NavbarProps> = ({ isLoggedIn, handleChangeState }) => {
                 </Link>
               </>
             )}
-            {isLoggedIn && (
+            {token && (
               <>
                 <Link href={'*'}>
                   <MenuItem setActive={setActive} active={active} item="Order" />

@@ -3,13 +3,24 @@ import React from 'react';
 import { HeroParallax } from '@/components/ui/hero-parallax';
 import { Button } from '@/components/ui/button';
 import { BackgroundGradient } from '@/components/ui/background-gradient';
-import { IconAppWindow } from '@tabler/icons-react';
+
 import Image from 'next/image';
 import Link from 'next/link';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
-function page() {
+
+
+
+
+
+
+
+
+
+
+
+function Page() {
   const handleLogout = async () => {
     try {
       const response = await axios.post('/api/admin/logout');
@@ -26,7 +37,7 @@ function page() {
       console.log(error);
     }
 
-    // Redirect to the home page after logout
+    
   };
   return (
     <>
@@ -37,7 +48,7 @@ function page() {
           </Button>
         </div>
         <div className='hidden sm:flex flex-grow'>
-          <HeroParallax products={products} />
+        
         </div>
         <div className='block sm:hidden'>
           <div className='min-h-screen  pt-15 '>
@@ -195,9 +206,9 @@ function page() {
   );
 }
 
-export default page;
+export default Page;
 
-export const products = [
+/*export const products = [
   {
     title: 'All Users',
     link: '/admindashbord/users',
@@ -236,3 +247,4 @@ export const products = [
     thumbnail: '/uploads/6.png',
   },
 ];
+*/

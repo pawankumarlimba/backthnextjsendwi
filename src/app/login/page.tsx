@@ -7,26 +7,20 @@ import Link from "next/link";
 import axios from "axios";
 import { toast } from "react-toastify";
 import Navbar3 from "@/components/Navbar3";
+import { saveTokenToLocalStorage } from "@/helpers/Localstorege";
 
 
 
 
-const page: React.FC = () => {
+const Page= () => {
   
   const [email,setemail]=useState('');
   const [password,setpassword]=useState('');
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(localStorage.getItem("isLoggedIn") === "true");
+ 
 
  
-  const handleChangeState = (newValue: boolean) => {
-    setIsLoggedIn(newValue);
-  };
-  useEffect(() => {
-    const storedIsLoggedIn = localStorage.getItem('isLoggedIn');
-    if (storedIsLoggedIn === 'true') {
-      handleChangeState(true);
-    }
-  }, []);
+
+  
    const handleSubmit =async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     
@@ -35,29 +29,28 @@ const page: React.FC = () => {
       const response=await axios.post('/api/user/login',{
         email,
         password})
+        const token="akartirachna";
+        saveTokenToLocalStorage(token);
         console.log(response);
         if(response.data.success){
        
-         
-          localStorage.setItem("isLoggedIn", "true");
-          setIsLoggedIn(true);
-        
-console.log(isLoggedIn);
-toast.success("user login succesfully");
-window.location.replace('/');
-
+          toast.success("user login succesfully");
+          window.location.replace('/');
+          
         }
+        
+
         else{
           toast.error("account not found")
         }
     } catch (error) {
       toast.error("somthing is wrong")
     }
-    console.log(isLoggedIn);
+   
   };
   return (
     <>
-    <Navbar3  isLoggedIn={isLoggedIn} handleChangeState={handleChangeState}  />
+    <Navbar3    />
     <div className="flex justify-center items-center bg-white h-[100vh] w-[100vw] sm:h-[100vh] sm:w-[100vw]  md:h-[100vh] md:w-[100vw]  lg:h-[100vh] lg:w-[100vw] overflow-hidden mx-auto  ">
  <div className="max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-white dark:bg-black">
  <div className="flex flex-row relative ">
@@ -143,4 +136,4 @@ const LabelInputContainer = ({
   );
 };
 
-export default page
+export default Page

@@ -32,42 +32,32 @@ import {
     DropdownMenuTrigger,
   } from "@/components/ui/dropdown-menu"
 import Link from "next/link"
-import { useEffect, useState } from "react"
+
 import axios from "axios"
 import { toast } from "react-toastify"
-interface HerosectionProps {
-  handleChangeState: (newValue: boolean) => void;
- 
-}
+import { getTokenFromLocalStorage, removeTokenFromLocalStorage } from "@/helpers/Localstorege"
+import { useEffect, useState } from "react"
 
-const Navbar2: React.FC<HerosectionProps> = ({ handleChangeState }) => {
+
+const Navbar2= () => {
   // Retrieve isLoggedIn value from local storage
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(() => {
-    const storedValue = localStorage.getItem("isLoggedIn");
-    return storedValue ? JSON.parse(storedValue) : true;
-  });
-   handleChangeState = (newValue: boolean) => {
-    setIsLoggedIn(newValue);
-  };
+  
+  const [token,settoken]=useState<string | null>(null);
   useEffect(() => {
-    const storedIsLoggedIn = localStorage.getItem('isLoggedIn');
-    if (storedIsLoggedIn === 'true') {
-      handleChangeState(true);
-    }
+    const storedToken = getTokenFromLocalStorage();
+    settoken(storedToken);
   }, []);
-
-  useEffect(() => {
-    localStorage.setItem("isLoggedIn", JSON.stringify(isLoggedIn));
-  }, [isLoggedIn]);
-
+ 
   const handleLogout =async () => {
     try {
       const response=await axios.get('/api/user/logout');
        
       if(response.data.success===true)
       {
-        localStorage.setItem("isLoggedIn", "false");
-        handleChangeState(false);
+       removeTokenFromLocalStorage();
+        settoken(null);
+    
+       
         toast.success("user logout succesfully");
         console.log(response);
       
@@ -80,10 +70,12 @@ const Navbar2: React.FC<HerosectionProps> = ({ handleChangeState }) => {
       toast.error("internal error ")
       console.log(error)
     }
-   
     // Redirect to the home page after logout
     
   };
+
+  
+
     return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -96,7 +88,7 @@ const Navbar2: React.FC<HerosectionProps> = ({ handleChangeState }) => {
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
 
-            {!isLoggedIn && (<>
+            {!token && (<>
               <DropdownMenuItem> 
                 <User className="mr-2 h-4 w-4" />
                <Link href={"/singup"}>
@@ -109,7 +101,7 @@ const Navbar2: React.FC<HerosectionProps> = ({ handleChangeState }) => {
                 <span>Login</span></Link>
                 
               </DropdownMenuItem></>)}
-              {isLoggedIn && (<>
+              {token && (<>
               <DropdownMenuItem> 
                 <User className="mr-2 h-4 w-4" />
                <Link href={"/singup"}>

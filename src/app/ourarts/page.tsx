@@ -13,25 +13,9 @@ interface Webinar {
   description: string;
   url: string;
 }
-const page: React.FC<ourartsProps> = ({ handleChangeState }) => {
+const Page = () => {
   // Retrieve isLoggedIn value from local storage
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(() => {
-    const storedValue = localStorage.getItem("isLoggedIn");
-    return storedValue ? JSON.parse(storedValue) : true;
-  });
-   handleChangeState = (newValue: boolean) => {
-    setIsLoggedIn(newValue);
-  };
-  useEffect(() => {
-    const storedIsLoggedIn = localStorage.getItem('isLoggedIn');
-    if (storedIsLoggedIn === 'true') {
-      handleChangeState(true);
-    }
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem("isLoggedIn", JSON.stringify(isLoggedIn));
-  }, [isLoggedIn]);
+  
 
 
 
@@ -68,7 +52,7 @@ const page: React.FC<ourartsProps> = ({ handleChangeState }) => {
   return (
     <>
     <div className="bg-white ">
-    <Navbar3 isLoggedIn={isLoggedIn} handleChangeState={handleChangeState} />
+    <Navbar3  />
     </div>
     <div className="p-12 bg-white p-4">
 <div className="max-w-7xl mx-auto px-4 sm:px-6">
@@ -131,4 +115,4 @@ const page: React.FC<ourartsProps> = ({ handleChangeState }) => {
       link: "/uploads/member-2.jpg",
     },
   ];*/
-export default page
+export default Page

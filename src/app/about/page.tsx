@@ -8,32 +8,16 @@ import {
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
-interface aboutProps {
-  handleChangeState: (newValue: boolean) => void;
-}
-const page: React.FC<aboutProps> = ({ handleChangeState }) => {
-  // Retrieve isLoggedIn value from local storage
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(() => {
-    const storedValue = localStorage.getItem("isLoggedIn");
-    return storedValue ? JSON.parse(storedValue) : true;
-  });
-   handleChangeState = (newValue: boolean) => {
-    setIsLoggedIn(newValue);
-  };
-  useEffect(() => {
-    const storedIsLoggedIn = localStorage.getItem('isLoggedIn');
-    if (storedIsLoggedIn === 'true') {
-      handleChangeState(true);
-    }
-  }, []);
 
-  useEffect(() => {
-    localStorage.setItem("isLoggedIn", JSON.stringify(isLoggedIn));
-  }, [isLoggedIn]);
+const Page = () => {
+  // Retrieve isLoggedIn value from local storage
+  
+
+ 
   return (
     <>
     <div className="bg-white ">
-    <Navbar3  isLoggedIn={isLoggedIn} handleChangeState={handleChangeState} />
+    <Navbar3   />
     </div>
     <div className="bg-white min-h-screen min-w-screen relative ">
      <div className=" pt-5">
@@ -105,4 +89,4 @@ const page: React.FC<aboutProps> = ({ handleChangeState }) => {
 )
 }
 
-export default page
+export default Page
