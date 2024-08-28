@@ -106,7 +106,7 @@ function Herosection2() {
             </Link>
           </div>
         </div>
-        <div className='absolute grid grid-cols-1 mb-[8vh] mt-[-5vh] sm:grid-cols-3 gap-3 top-[60vh] left-[9vw] sm:top-[35vh] lg:bottom-[5vh] sm:left-[40vw] flex justify-center items-center'>
+        <div className='absolute grid grid-cols-1 sm:mb-[8vh] sm:mt-[-5vh]  m:grid-cols-3 gap-3 top-[60vh] left-[9vw] sm:top-[35vh] lg:bottom-[5vh] sm:left-[40vw] flex justify-center items-center'>
           <div className='flex justify-center '>
             <Link
               href={{
