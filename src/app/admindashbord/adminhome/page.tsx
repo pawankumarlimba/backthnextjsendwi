@@ -208,7 +208,7 @@ function Page() {
 
 export default Page;
 
-/*export const products = [
+export const products = [
   {
     title: 'All Users',
     link: '/admindashbord/users',
@@ -247,4 +247,3 @@ export default Page;
     thumbnail: '/uploads/6.png',
   },
 ];
-*/
